@@ -1,10 +1,12 @@
+cat > config/$PLATFORM/hosts_file.yml <<- EOM
 HOSTS:
-  debian8:
+  agent:
     roles:
       - master
-    platform: debian-8-x86_64
+    platform: ${PLATFORM_TYPE}
     hypervisor: none
     ip: 127.0.0.1
 CONFIG:
   type: foss
   set_env: false
+EOM

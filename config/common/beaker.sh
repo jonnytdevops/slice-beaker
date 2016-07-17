@@ -24,6 +24,7 @@ echo "" | sudo tee -a /etc/ssh/sshd_config
 echo "Match address ::1" | sudo tee -a /etc/ssh/sshd_config
 echo "    PermitRootLogin without-password" | sudo tee -a /etc/ssh/sshd_config
 mkdir -p .ssh
+rm -rf ~/.ssh/id_rsa
 ssh-keygen -f ~/.ssh/id_rsa -b 2048 -C "beaker key" -P ""
 sudo mkdir -p /root/.ssh
 sudo rm /root/.ssh/authorized_keys
@@ -31,13 +32,16 @@ cat ~/.ssh/id_rsa.pub | sudo tee -a /root/.ssh/authorized_keys
 sudo systemctl restart sshd
 
 # prepare gems
-cd /vagrant/$MODULE
+cd /vagrant/modules/$MODULE
 sudo gem install bundler --no-rdoc --no-ri --verbose
-mkdir .bundled_gems
+if [[ ! -d .bundled_gems ]]; then
+  mkdir .bundled_gems
+fi
 export GEM_HOME=`pwd`/.bundled_gems
 bundle install
 
+
 # run tests
-export BEAKER_setfile=/vagrant/$PLATFORM.yml
+export BEAKER_setfile=/vagrant/config/$PLATFORM/hosts_file.yml
 export BEAKER_debug=yes
 bundle exec rake beaker
