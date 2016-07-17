@@ -4,14 +4,15 @@ set -e
 
 MODULE=$1
 PLATFORM=$2
+PLATFORM_TYPE=$3
 
 HTTP_PROXY=http://proxy.ops.puppetlabs.net:3128;export HTTP_PROXY
 
 # install deps needed when using cloud images
-if [ $PLATFORM == 'centos-7-x86_64' ]; then
+if [[ $PLATFORM_TYPE = *"el-"* ]]; then
     sudo yum -y install libxml2-devel libxslt-devel ruby-devel
     sudo yum -y groupinstall "Development Tools"
-elif [ $PLATFORM == 'debian-8.2.0-x86_64' ]; then
+elif [[ $PLATFORM_TYPE = *"debian-"* ]] || [[ $PLATFORM_TYPE = *"ubuntu-"* ]]; then
     sudo apt-get update
     sudo apt-get install -y libxml2-dev libxslt-dev zlib1g-dev git ruby ruby-dev build-essential
 fi
