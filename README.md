@@ -3,7 +3,7 @@
 This tooling allows a user to execute beaker tests using the SLICE infrastructure.
 
 ## Usage
-1. Make sure you are setup for API access to a SLICE region by following the SLICE User Docs.
+1. Make sure you are setup for API access to a SLICE region by following the [SLICE User Docs](https://confluence.puppetlabs.com/display/OPS/SLICE+User+Documentation).
 
 2. Create a new pass-phraseless keypair (named 'vagrant') for use with your Vagrant managed instances according to SLICE User    Docs. Download the vagrant.pem file and place it inside your ~/.ssh/ directory.
 
